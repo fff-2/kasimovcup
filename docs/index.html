@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>카시모프컵 2026 팀 가이드</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
+</head>
+<body>
+<style>
+  :root {
+    --paper: #FBFAF7;
+    --panel: #F2EFE9;
+    --ink: #211E1B;
+    --muted: #6E6760;
+    --rule: #E3DED5;
+    --red: #8A1A12;        /* 경기장 경계선에서 따온 암적색 */
+    --red-soft: #F6E8E5;
+    --slate: #3C5A78;      /* 순찰 상태 */
+    --slate-soft: #E8EEF4;
+    --amber: #94660A;      /* 안전/경고 */
+    --amber-soft: #FAF1DC;
+    --mono: Consolas, "Cascadia Mono", "Courier New", monospace;
+  }
+  * { box-sizing: border-box; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Pretendard Variable", Pretendard, "Malgun Gothic", "Apple SD Gothic Neo", system-ui, sans-serif;
+    font-size: 15.5px;
+    line-height: 1.68;
+    margin: 0;
+  }
+  .wrap { max-width: 920px; margin: 0 auto; padding: 44px 24px 80px; }
+
+  /* ---------- 헤더 ---------- */
+  header { border-bottom: 3px solid var(--red); padding-bottom: 26px; margin-bottom: 14px; }
+  .eyebrow {
+    font-size: 12.5px; font-weight: 700; letter-spacing: .14em;
+    color: var(--red); text-transform: uppercase; margin: 0 0 10px;
+  }
+  h1 {
+    font-size: clamp(26px, 4.5vw, 34px); font-weight: 800; letter-spacing: -.02em;
+    margin: 0 0 8px; text-wrap: balance;
+  }
+  .sub { color: var(--muted); margin: 0; max-width: 62ch; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .chip {
+    font-size: 12.5px; font-weight: 600; color: var(--ink);
+    background: var(--panel); border: 1px solid var(--rule);
+    padding: 4px 11px; border-radius: 999px;
+  }
+
+  /* ---------- 목차 ---------- */
+  nav { display: flex; flex-wrap: wrap; gap: 4px 18px; padding: 14px 0 0; margin-bottom: 40px; }
+  nav a {
+    color: var(--slate); text-decoration: none; font-size: 13.5px; font-weight: 600;
+  }
+  nav a:hover, nav a:focus-visible { color: var(--red); text-decoration: underline; outline: none; }
+
+  /* ---------- 섹션 공통 ---------- */
+  main { display: grid; gap: 56px; }
+  section > h2 {
+    font-size: 21px; font-weight: 800; letter-spacing: -.01em;
+    margin: 0 0 6px; padding-top: 8px;
+  }
+  section > h2 .no { color: var(--red); font-variant-numeric: tabular-nums; margin-right: 8px; }
+  .lede { color: var(--muted); margin: 0 0 18px; max-width: 68ch; }
+  h3 { font-size: 16px; font-weight: 700; margin: 26px 0 10px; }
+  p { max-width: 70ch; }
+  code {
+    font-family: var(--mono); font-size: .88em;
+    background: var(--panel); border: 1px solid var(--rule);
+    padding: 1px 5px; border-radius: 4px; white-space: nowrap;
+  }
+
+  /* ---------- 표 ---------- */
+  .scroll { overflow-x: auto; border: 1px solid var(--rule); border-radius: 8px; background: #fff; }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; }
+  th, td { text-align: left; padding: 9px 14px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  thead th {
+    font-size: 12px; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--muted); background: var(--panel); border-bottom: 1px solid var(--rule);
+    white-space: nowrap;
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  td.num, td.pin { font-family: var(--mono); font-size: 13px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  tr.group td {
+    background: var(--panel); font-weight: 700; font-size: 13px;
+    letter-spacing: .04em; color: var(--ink); padding: 7px 14px;
+  }
+  .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 7px; vertical-align: 1px; }
+
+  /* ---------- 콜아웃 ---------- */
+  .note, .danger {
+    border-radius: 8px; padding: 13px 16px; margin: 14px 0; font-size: 14.5px;
+    max-width: none;
+  }
+  .note { background: var(--amber-soft); border: 1px solid #E5D3A8; }
+  .danger { background: var(--red-soft); border: 1px solid #E0BBB5; }
+  .note strong, .danger strong { display: block; margin-bottom: 2px; }
+  .danger strong { color: var(--red); }
+  .note strong { color: var(--amber); }
+
+  /* ---------- 카드 그리드 ---------- */
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; margin: 16px 0; }
+  .card { background: #fff; border: 1px solid var(--rule); border-radius: 8px; padding: 14px 16px; }
+  .card b { display: block; font-size: 13px; color: var(--muted); font-weight: 600; margin-bottom: 4px; }
+  .card .big { font-size: 19px; font-weight: 800; letter-spacing: -.01em; }
+  .card .big em { font-style: normal; color: var(--red); }
+  .card p { font-size: 13px; color: var(--muted); margin: 6px 0 0; line-height: 1.55; }
+
+  /* ---------- 전술(경기장) 레이아웃 ---------- */
+  .tactic { display: flex; gap: 28px; align-items: flex-start; flex-wrap: wrap; margin-top: 6px; }
+  .tactic .arena { flex: 0 0 400px; max-width: 100%; }
+  .tactic .steps { flex: 1 1 320px; min-width: 280px; }
+  ol.plan { margin: 0; padding-left: 0; list-style: none; counter-reset: p; display: grid; gap: 12px; }
+  ol.plan li { counter-increment: p; position: relative; padding-left: 40px; }
+  ol.plan li::before {
+    content: counter(p); position: absolute; left: 0; top: 1px;
+    width: 26px; height: 26px; border-radius: 50%;
+    background: var(--red); color: #fff; font-weight: 700; font-size: 13px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  ol.plan b { font-weight: 700; }
+  ol.plan .d { color: var(--muted); font-size: 13.5px; }
+
+  /* ---------- 다이어그램 ---------- */
+  .legend { display: flex; flex-wrap: wrap; gap: 14px; margin: 12px 0 10px; font-size: 13px; font-weight: 600; }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .swatch { width: 14px; height: 14px; border-radius: 4px; border: 1.5px solid; }
+  figure { margin: 0; }
+  figcaption { font-size: 13px; color: var(--muted); margin-top: 10px; }
+  .diagram { overflow-x: auto; background: #fff; border: 1px solid var(--rule); border-radius: 8px; padding: 10px 6px; }
+  .diagram svg { display: block; min-width: 880px; margin: 0 auto; }
+
+  /* ---------- 체크리스트 ---------- */
+  ul.check { list-style: none; padding: 0; margin: 10px 0; display: grid; gap: 9px; max-width: 72ch; }
+  ul.check li { position: relative; padding-left: 30px; }
+  ul.check li::before {
+    content: ""; position: absolute; left: 0; top: 4px; width: 15px; height: 15px;
+    border: 2px solid var(--slate); border-radius: 4px; background: #fff;
+  }
+  ul.check li.warn::before { border-color: var(--red); }
+  ul.check li.warn { font-weight: 600; }
+
+  footer {
+    margin-top: 64px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 13px; color: var(--muted);
+  }
+  footer code { background: #fff; }
+  a { color: var(--slate); }
+</style>
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">KAsimov Cup 2026 · 7월 10일 · 지능로봇동아리 KAsimov</p>
+    <h1>스모봇 팀 가이드 — 규칙 · 하드웨어 · 전술 · 튜닝</h1>
+    <p class="sub">우리 로봇이 어떻게 움직이는지, 무엇을 조여야 하는지 한 장으로 정리한 문서입니다. 코드를 안 봐도 이 문서만으로 경기 당일 대응이 가능해야 합니다.</p>
+    <div class="chips">
+      <span class="chip">아두이노 나노 ×2</span>
+      <span class="chip">초음파 HC-SR04 ×4 (전후좌우)</span>
+      <span class="chip">컬러 TCS34725 ×2 (앞·뒤)</span>
+      <span class="chip">모터드라이버 L298N</span>
+      <span class="chip">완전 자율 주행</span>
+    </div>
+  </header>
+
+  <nav aria-label="목차">
+    <a href="#rules">1 대회 규칙</a>
+    <a href="#hw">2 하드웨어</a>
+    <a href="#tactic">3 전술</a>
+    <a href="#fsm">4 상태머신</a>
+    <a href="#tune">5 튜닝 상수</a>
+    <a href="#day">6 경기 당일</a>
+  </nav>
+
+  <main>
+
+    <!-- ================= 1. 규칙 ================= -->
+    <section id="rules">
+      <h2><span class="no">1</span>대회 규칙 요약</h2>
+      <p class="lede">점수 구조가 곧 전술입니다. 아래 네 가지 숫자를 기억하세요.</p>
+
+      <div class="cards">
+        <div class="card"><b>상대 장외</b><span class="big"><em>+2점</em></span><p>우리의 주 득점원. 경계선 밖으로 밀어내면 획득</p></div>
+        <div class="card"><b>상대 완전 뒤집기</b><span class="big"><em>TKO</em></span><p>10초 카운트 후 즉시 승리</p></div>
+        <div class="card"><b>5초 이상 행동불능</b><span class="big"><em>상대에게 5점</em></span><p>장외보다 큰 실점! 코드의 정지 워치독이 막아주는 항목</p></div>
+        <div class="card"><b>10초 이상 정지</b><span class="big"><em>상대에게 2점</em></span><p>멈추면 손해. 우리 로봇은 절대 가만히 있지 않게 설계됨</p></div>
+      </div>
+
+      <div class="scroll">
+        <table>
+          <tbody>
+            <tr><td style="width:170px"><strong>경기장</strong></td><td>지름 110cm 옥타곤 — <strong>흰 바닥 + 빨간 경계선(#660000), 선 두께 7cm</strong></td></tr>
+            <tr><td><strong>시작 배치</strong></td><td>로봇 앞면이 서로 마주보게, 양 끝 지정된 점 위에서 시작</td></tr>
+            <tr><td><strong>경기 방식</strong></td><td>경기 시간 3~4분(곡 선정) · 조별 리그 → 4강 토너먼트 · 각 라운드 전/후반, 하프타임 2분</td></tr>
+            <tr><td><strong>승점</strong></td><td>승 3 / 무 1 / 패 0 · 동점이면 무승부 · 승점 동률 시 TKO승 → 점수 차 총합 순</td></tr>
+            <tr><td><strong>조작</strong></td><td><strong>완전 자동만 허용</strong> (리모컨 등 수동 조작 금지)</td></tr>
+            <tr><td><strong>로봇 규격</strong></td><td>본체 15×15×10cm · 중량 700g · 로봇 팔 크기 제한 없음 · 앞면 최소높이 제한 없음</td></tr>
+            <tr><td><strong>지상고 규정</strong></td><td><strong>바퀴를 제외한 모든 부품은 지면에서 2cm 이상</strong> (뒤집기 규칙 때문) → 컬러센서 장착 높이에 직접 영향</td></tr>
+            <tr><td><strong>구동/부품</strong></td><td>바퀴·볼·다리 허용, 지지축 3개 제한 · 이동 외 추가 액추에이터 2개 제한 · 기계요소 결합만 허용 · 센서/카메라는 종류·개수 무제한</td></tr>
+            <tr><td><strong>작전타임</strong></td><td>경기당 1회 5분, <strong>페널티 -3점</strong> · 타임 중 HW/SW 수정 가능 (크기·중량 변경 시 재측정)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ================= 2. 하드웨어 ================= -->
+    <section id="hw">
+      <h2><span class="no">2</span>하드웨어 구성</h2>
+      <p class="lede">나노 2대 체제입니다. TCS34725 컬러센서는 I2C 주소(0x29)가 고정이라 한 버스에 2개를 못 달기 때문에, <strong>앞 센서는 메인 나노가 직접</strong> 읽고 <strong>뒤 센서는 전담 나노</strong>가 읽어 감지 결과만 디지털 신호 한 가닥으로 넘깁니다.</p>
+
+      <h3>메인 나노 (모든 연산)</h3>
+      <div class="scroll">
+        <table>
+          <thead><tr><th>부품</th><th>핀</th><th>비고</th></tr></thead>
+          <tbody>
+            <tr><td>초음파 오른쪽</td><td class="pin">trig D2 / echo D3</td><td rowspan="4">HC-SR04. 크로스토크 방지를 위해 코드가 순차 발사<br>(앞은 매 루프, 나머지는 번갈아 1개)</td></tr>
+            <tr><td>초음파 앞</td><td class="pin">trig D4 / echo D5</td></tr>
+            <tr><td>초음파 왼쪽</td><td class="pin">trig D6 / echo D7</td></tr>
+            <tr><td>초음파 뒤</td><td class="pin">trig D8 / echo D9</td></tr>
+            <tr><td>L298N 속도(PWM)</td><td class="pin">ENA D10 · ENB D11</td><td>초음파가 PWM핀(D3/5/6/9)을 점유해서 D10/D11만 남음 — 건드리지 말 것</td></tr>
+            <tr><td>L298N 방향</td><td class="pin">IN1 A0 · IN2 A1 · IN3 A2 · IN4 A3</td><td>왼쪽 모터 IN1/2, 오른쪽 IN3/4</td></tr>
+            <tr><td>앞 컬러센서</td><td class="pin">SDA A4 / SCL A5</td><td>I2C 직결 — 반응속도가 생명인 앞쪽을 메인에 배치</td></tr>
+            <tr><td>뒤 라인 신호 입력</td><td class="pin">D12</td><td>컬러 나노에서 옴. HIGH = 뒤에 라인</td></tr>
+            <tr><td>상태 LED / 시작 버튼</td><td class="pin">D13 / A6</td><td>A6는 아날로그 전용 핀 — 아래 경고 참조</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>컬러 나노 (뒤 라인 센서 전담)</h3>
+      <div class="scroll">
+        <table>
+          <thead><tr><th>부품</th><th>핀</th><th>비고</th></tr></thead>
+          <tbody>
+            <tr><td>뒤 컬러센서</td><td class="pin">SDA A4 / SCL A5</td><td>전원 인가 2초 후 자동으로 흰 바닥 캘리브레이션</td></tr>
+            <tr><td>감지 신호 출력</td><td class="pin">D2 → 메인 D12</td><td>감지 시 최소 80ms 유지(래치) — 메인이 놓치지 않게</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="danger"><strong>배선에서 가장 많이 터지는 실수 3가지</strong>
+        ① 두 나노의 <strong>GND를 서로 연결하지 않음</strong> → D12 신호가 무의미해짐.
+        ② 시작 버튼 <strong>A6에 10kΩ 풀다운 저항 누락</strong> → 핀이 떠서 로봇이 멋대로 출발.
+        ③ 컬러센서 모듈의 <strong>LED를 꺼둠</strong> → 로봇 밑은 그늘이라 감지 불가. LED는 항상 ON.
+      </div>
+      <div class="note"><strong>9V 사각 배터리가 최대 약점</strong>
+        L298N이 약 2V를 잡아먹어 모터에 ~7V만 전달되고, 9V 배터리는 밀기 싸움의 순간 전류를 못 버팁니다. <strong>매 경기 새 배터리</strong>가 최소 조건이고, 규정이 허용하면 2S 리튬(7.4V)으로의 교체를 검토하세요. 배터리가 닳으면 회전량도 줄어서 45° 시작 회전 각도가 함께 틀어집니다.
+      </div>
+    </section>
+
+    <!-- ================= 3. 전술 ================= -->
+    <section id="tactic">
+      <h2><span class="no">3</span>전술 — 경계선을 도는 사냥꾼</h2>
+      <p class="lede">정면 힘싸움을 피하고, 경계선을 따라 돌다가 만나는 순간 <strong>먼저 보고, 먼저 꺾어서, 비스듬히</strong> 밀어 장외시키는 전술입니다.</p>
+
+      <div class="tactic">
+        <figure class="arena">
+          <svg viewBox="0 0 420 400" role="img" aria-label="경기장 주행 경로: 45도 회전 후 직진, 경계선 도착 후 선을 따라 선회">
+            <!-- 옥타곤 (빨간 7cm 경계선) -->
+            <polygon points="348.6,122.6 267.4,41.4 152.6,41.4 71.4,122.6 71.4,237.4 152.6,318.6 267.4,318.6 348.6,237.4"
+              fill="#FDFCFA" stroke="#8A1A12" stroke-width="19"/>
+            <defs>
+              <marker id="ab" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M0,0 L10,5 L0,10 z" fill="#3C5A78"/>
+              </marker>
+            </defs>
+            <!-- 우리 로봇 (파랑) -->
+            <rect x="76" y="168" width="24" height="24" rx="3" fill="#3C5A78"/>
+            <!-- 상대 (회색) -->
+            <rect x="320" y="168" width="24" height="24" rx="3" fill="#B8B2AA"/>
+            <text x="88" y="212" font-size="12" font-weight="700" fill="#3C5A78" text-anchor="middle">우리</text>
+            <text x="332" y="212" font-size="12" font-weight="700" fill="#8B857D" text-anchor="middle">상대</text>
+            <!-- 경로: 45도 꺾어 직진 -->
+            <path d="M 104 186 L 216 300" fill="none" stroke="#3C5A78" stroke-width="3" stroke-dasharray="7 6" marker-end="url(#ab)"/>
+            <!-- 경로: 경계 도착 후 선회 -->
+            <path d="M 226 302 Q 320 288 337 210" fill="none" stroke="#3C5A78" stroke-width="3" stroke-dasharray="7 6" marker-end="url(#ab)"/>
+            <path d="M 338 196 Q 338 130 296 78" fill="none" stroke="#3C5A78" stroke-width="3" stroke-dasharray="7 6" marker-end="url(#ab)"/>
+            <!-- 번호 배지 -->
+            <g font-size="12" font-weight="800" text-anchor="middle">
+              <circle cx="128" cy="196" r="11" fill="#8A1A12"/><text x="128" y="200" fill="#fff">1</text>
+              <circle cx="243" cy="288" r="11" fill="#8A1A12"/><text x="243" y="292" fill="#fff">2</text>
+              <circle cx="318" cy="128" r="11" fill="#8A1A12"/><text x="318" y="132" fill="#fff">3</text>
+            </g>
+            <!-- 조우 마커 -->
+            <text x="286" y="66" font-size="15" text-anchor="middle">⚔</text>
+            <text x="210" y="382" font-size="11.5" fill="#6E6760" text-anchor="middle">경계선(빨강 7cm) 안쪽을 따라 도는 우리 경로</text>
+          </svg>
+        </figure>
+
+        <div class="steps">
+          <ol class="plan">
+            <li><b>기습 출발</b><br><span class="d">시작하자마자 45° 꺾어 직진 — 상대의 첫 정면 돌격을 흘려보낸다</span></li>
+            <li><b>경계선 선회</b><br><span class="d">앞 컬러센서가 빨간 선을 잡으면 선을 따라 원을 그리며 순찰</span></li>
+            <li><b>조우 → 선제 꺾기 → 밀어내기</b><br><span class="d">초음파로 상대를 먼저 감지하고 살짝 안쪽으로 꺾어 <b>상대 측면</b>을 잡는다. 상대는 이미 경계선 근처 — 조금만 밀어도 장외</span></li>
+          </ol>
+
+          <h3 style="margin-top:22px">조우는 딱 두 가지 형태로 옵니다</h3>
+          <p style="font-size:14px; margin:6px 0"><strong>A. 서로 반대로 돌 때</strong> — 정면에서 마주침. 앞 초음파 30cm에서 잡고 안쪽으로 150ms 선회 후 전속 밀기.</p>
+          <p style="font-size:14px; margin:6px 0"><strong>B. 같은 방향으로 돌 때</strong> — 속도 차로 추격전. 뒤 초음파에 잡히면 가속하며 안쪽으로 파고들고, 상대가 바깥으로 지나치면 그대로 측면을 민다. 서로 영영 안 만나면 8초 후 중앙을 가로질러 판을 깬다.</p>
+        </div>
+      </div>
+
+      <div class="note"><strong>이 전술의 안전핀: 라인이 항상 공격보다 우선</strong>
+        경계선 근처에서 싸우는 전술이라 <strong>자기 장외</strong>가 가장 큰 리스크입니다. 그래서 코드는 밀기 도중이라도 앞에 빨간 선이 보이면 무조건 제동→후진→복귀합니다. 7cm 선 두께 덕분에 감지 후 실제 장외까지 여유가 있습니다.
+      </div>
+    </section>
+
+    <!-- ================= 4. 상태머신 ================= -->
+    <section id="fsm">
+      <h2><span class="no">4</span>상태머신 — 로봇의 두뇌</h2>
+      <p class="lede">로봇은 항상 12개 상태 중 하나에 있습니다. 굵은 테두리의 <strong>LINE_FOLLOW(라인 선회)</strong>가 홈베이스이고, 모든 상태는 일이 끝나면 여기로 돌아옵니다.</p>
+
+      <div class="legend">
+        <span><span class="swatch" style="background:#F2EFE9;border-color:#6E6760"></span>준비</span>
+        <span><span class="swatch" style="background:#E8EEF4;border-color:#3C5A78"></span>순찰</span>
+        <span><span class="swatch" style="background:#F6E8E5;border-color:#8A1A12"></span>전투</span>
+        <span><span class="swatch" style="background:#FAF1DC;border-color:#94660A"></span>안전 (오버라이드)</span>
+      </div>
+
+      <figure>
+        <div class="diagram">
+        <svg viewBox="0 0 940 692" role="img" aria-label="상태머신 다이어그램">
+          <defs>
+            <marker id="m" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="#55504B"/>
+            </marker>
+          </defs>
+          <style>
+            .st { rx: 8; }
+            .prep { fill: #F2EFE9; stroke: #6E6760; stroke-width: 1.6; }
+            .pat  { fill: #E8EEF4; stroke: #3C5A78; stroke-width: 1.6; }
+            .cmb  { fill: #F6E8E5; stroke: #8A1A12; stroke-width: 1.6; }
+            .saf  { fill: #FAF1DC; stroke: #94660A; stroke-width: 1.6; }
+            .nm { font: 700 14.5px Consolas, monospace; fill: #211E1B; text-anchor: middle; }
+            .sb { font: 600 11px "Malgun Gothic", sans-serif; fill: #6E6760; text-anchor: middle; }
+            .eg { fill: none; stroke: #55504B; stroke-width: 1.7; }
+            .lb { font: 600 11.5px "Malgun Gothic", sans-serif; fill: #55504B; text-anchor: middle;
+                  paint-order: stroke; stroke: #FFFFFF; stroke-width: 4px; stroke-linejoin: round; }
+          </style>
+
+          <!-- ===== 시작 시퀀스 ===== -->
+          <rect class="st prep" x="28"  y="34" width="118" height="52"/>
+          <text class="nm" x="87"  y="57">IDLE</text><text class="sb" x="87" y="75">대기</text>
+          <rect class="st prep" x="186" y="34" width="140" height="52"/>
+          <text class="nm" x="256" y="57">CALIBRATE</text><text class="sb" x="256" y="75">흰 바닥 기준값 저장</text>
+          <rect class="st prep" x="366" y="34" width="142" height="52"/>
+          <text class="nm" x="437" y="57">START_TURN</text><text class="sb" x="437" y="75">제자리 45° 회전</text>
+          <rect class="st pat"  x="548" y="34" width="132" height="52"/>
+          <text class="nm" x="614" y="57">SEEK_LINE</text><text class="sb" x="614" y="75">직진으로 라인 탐색</text>
+
+          <line class="eg" x1="146" y1="60" x2="182" y2="60" marker-end="url(#m)"/>
+          <text class="lb" x="166" y="50">버튼</text>
+          <line class="eg" x1="326" y1="60" x2="362" y2="60" marker-end="url(#m)"/>
+          <text class="lb" x="346" y="50">완료</text>
+          <line class="eg" x1="508" y1="60" x2="544" y2="60" marker-end="url(#m)"/>
+          <text class="lb" x="526" y="50">350ms</text>
+
+          <!-- ===== 순찰 축 ===== -->
+          <rect class="st pat" x="548" y="158" width="132" height="52"/>
+          <text class="nm" x="614" y="181">LINE_TURN</text><text class="sb" x="614" y="199">제동 + 안쪽 회전</text>
+          <line class="eg" x1="614" y1="86" x2="614" y2="154" marker-end="url(#m)"/>
+          <text class="lb" x="668" y="126">앞 라인 감지</text>
+
+          <rect class="st pat" x="520" y="262" width="180" height="60" stroke-width="3"/>
+          <text class="nm" x="610" y="287">LINE_FOLLOW</text><text class="sb" x="610" y="306">경계선 위빙 선회 (홈베이스)</text>
+          <line class="eg" x1="614" y1="210" x2="614" y2="258" marker-end="url(#m)"/>
+          <text class="lb" x="678" y="238">라인 벗어남+180ms</text>
+          <line class="eg" x1="566" y1="258" x2="566" y2="214" marker-end="url(#m)"/>
+          <text class="lb" x="524" y="238">앞 라인</text>
+
+          <!-- ===== 전투: 선제회전 → 밀기 ===== -->
+          <rect class="st cmb" x="744" y="262" width="164" height="52"/>
+          <text class="nm" x="826" y="285">ATTACK_PRETURN</text><text class="sb" x="826" y="303">안쪽 선제 회전 150ms</text>
+          <line class="eg" x1="700" y1="288" x2="740" y2="288" marker-end="url(#m)"/>
+          <text class="lb" x="716" y="254">앞 ≤30cm ×2</text>
+
+          <rect class="st cmb" x="744" y="382" width="164" height="60"/>
+          <text class="nm" x="826" y="407">PUSH</text><text class="sb" x="826" y="426">전속 255 + 측면 조향 밀기</text>
+          <line class="eg" x1="826" y1="314" x2="826" y2="378" marker-end="url(#m)"/>
+          <text class="lb" x="852" y="350">150ms</text>
+          <polyline class="eg" points="744,412 600,412 600,326" marker-end="url(#m)"/>
+          <text class="lb" x="668" y="434">소실(&gt;40cm ×4) / 2.5초</text>
+
+          <!-- ===== 후방 방어 ===== -->
+          <rect class="st cmb" x="470" y="452" width="180" height="56"/>
+          <text class="nm" x="560" y="476">REAR_DEFENSE</text><text class="sb" x="560" y="494">가속 + 안쪽 파고들기</text>
+          <line class="eg" x1="540" y1="322" x2="540" y2="448" marker-end="url(#m)"/>
+          <text class="lb" x="490" y="388">뒤 ≤25cm ×2</text>
+          <line class="eg" x1="636" y1="452" x2="636" y2="326" marker-end="url(#m)"/>
+          <text class="lb" x="662" y="388">1.2초</text>
+          <polyline class="eg" points="650,480 922,480 922,288 912,288" marker-end="url(#m)"/>
+          <text class="lb" x="790" y="472">바깥쪽 ≤25cm (상대 오버슛)</text>
+
+          <!-- ===== 교착 해소 ===== -->
+          <rect class="st pat" x="200" y="452" width="180" height="56"/>
+          <text class="nm" x="290" y="476">CROSS_CUT</text><text class="sb" x="290" y="494">90° 꺾어 중앙 가로지르기</text>
+          <polyline class="eg" points="520,300 290,300 290,448" marker-end="url(#m)"/>
+          <text class="lb" x="392" y="292">8초 무접촉 (교착)</text>
+          <polyline class="eg" points="290,508 290,540 826,540 826,446" marker-end="url(#m)"/>
+          <text class="lb" x="560" y="532">정면 상대 감지 → 돌격</text>
+
+          <!-- ===== 전역 오버라이드 밴드 ===== -->
+          <rect x="28" y="574" width="884" height="106" rx="10" fill="none" stroke="#94660A" stroke-width="1.6" stroke-dasharray="7 5"/>
+          <text x="46" y="600" font-size="13" font-weight="800" fill="#94660A" font-family="Malgun Gothic, sans-serif">전역 오버라이드 — 어느 상태에서든 매 루프 검사, 즉시 개입 (①이 최우선)</text>
+
+          <rect class="st saf" x="46" y="612" width="256" height="52"/>
+          <text class="nm" x="174" y="633" style="font-size:13px">① 앞+뒤 라인 → EDGE_SPIN</text>
+          <text class="sb" x="174" y="651">제자리 회전 후 SEEK_LINE 복귀</text>
+
+          <rect class="st saf" x="322" y="612" width="332" height="52"/>
+          <text class="nm" x="488" y="633" style="font-size:13px">② 앞 라인 → LINE_TURN 또는 LINE_ESCAPE</text>
+          <text class="sb" x="488" y="651">순찰 중=가벼운 회피 · 전투 중=후진 포함 강한 회피</text>
+
+          <rect class="st saf" x="674" y="612" width="238" height="52"/>
+          <text class="nm" x="793" y="633" style="font-size:13px">③ 1.5초 정지 → SEEK_LINE</text>
+          <text class="sb" x="793" y="651">행동불능 감점 방지 워치독</text>
+        </svg>
+        </div>
+        <figcaption>다이어그램은 주 흐름만 표시합니다. 모든 상태의 정확한 탈출 조건은 아래 표가 기준입니다.</figcaption>
+      </figure>
+
+      <h3>상태별 상세 — 하는 일과 탈출 조건</h3>
+      <div class="scroll">
+        <table>
+          <thead><tr><th style="min-width:150px">상태</th><th style="min-width:230px">하는 일</th><th>탈출 조건 → 다음 상태</th></tr></thead>
+          <tbody>
+            <tr class="group"><td colspan="3"><span class="dot" style="background:#6E6760"></span>준비</td></tr>
+            <tr><td><code>IDLE</code> 대기</td><td>모터 정지, 시작 버튼 감시</td><td>버튼 눌림(30ms 재확인) → <code>CALIBRATE</code></td></tr>
+            <tr><td><code>CALIBRATE</code> 캘리브레이션</td><td>흰 바닥을 20회 샘플링(~0.5초)해 기준 밝기·색비율 저장. 실패 시 경고 점멸 후 보수적 기본값으로 진행</td><td>완료 → <code>START_TURN</code></td></tr>
+            <tr><td><code>START_TURN</code> 시작 회전</td><td>제자리에서 45° 회전 (시간 기반 — 배터리 전압에 민감)</td><td>350ms 경과 → <code>SEEK_LINE</code></td></tr>
+
+            <tr class="group"><td colspan="3"><span class="dot" style="background:#3C5A78"></span>순찰</td></tr>
+            <tr><td><code>SEEK_LINE</code> 라인 탐색</td><td>속도 160으로 직진</td><td>앞 라인 → <code>LINE_TURN</code> · 앞 초음파 ≤30cm ×2 (오는 길에 상대 발견) → <code>PUSH</code> 정면 돌격</td></tr>
+            <tr><td><code>LINE_FOLLOW</code> 라인 선회 ★홈베이스</td><td>속도 140에 바깥쪽 +25 조향을 걸어 경계선 쪽으로 살짝 밀며 전진(위빙). 직전에 뒤 라인이 감지됐다면 잠시 안쪽으로 조향</td><td>앞 라인 → <code>LINE_TURN</code> · 앞 ≤30cm ×2 → <code>ATTACK_PRETURN</code> · 뒤 ≤25cm ×2 → <code>REAR_DEFENSE</code> · 8초간 아무 감지 없음 → <code>CROSS_CUT</code></td></tr>
+            <tr><td><code>LINE_TURN</code> 위빙 회전</td><td>50ms 제동 후 안쪽으로 제자리 회전 — 선회 경로의 "꺾는 순간"</td><td>라인이 안 보인 지 180ms → <code>LINE_FOLLOW</code> · 1.2초 넘게 계속 보임(깊이 진입) → <code>LINE_ESCAPE</code></td></tr>
+            <tr><td><code>CROSS_CUT</code> 중앙 가로지르기</td><td>안쪽으로 90°(약 700ms) 꺾은 뒤 직진 — 같은 방향으로 돌며 영영 안 만나는 교착을 깨는 수</td><td>앞 ≤30cm ×2 → <code>PUSH</code> · 앞 라인 → <code>LINE_TURN</code></td></tr>
+
+            <tr class="group"><td colspan="3"><span class="dot" style="background:#8A1A12"></span>전투</td></tr>
+            <tr><td><code>ATTACK_PRETURN</code> 선제 회전</td><td>전진하며 150ms 회전해 비스듬한 충돌각 확보 — 상대 측면을 잡아 바깥으로 밀기 위한 준비 동작</td><td>150ms 경과 → <code>PUSH</code></td></tr>
+            <tr><td><code>PUSH</code> 밀기</td><td>양쪽 모터 255 전속. 측면 초음파(≤25cm)에 상대가 걸리면 그쪽으로 조향 보정. 밀착하면 초음파에서 상대가 사라질 수 있어 <strong>소실 즉시 포기하지 않고</strong> 접촉 유지로 간주</td><td>앞 라인 → <code>LINE_ESCAPE</code> (자기 장외 방지 — 최우선) · 상대 소실(&gt;40cm ×4회) 또는 2.5초 경과 → <code>LINE_FOLLOW</code></td></tr>
+            <tr><td><code>REAR_DEFENSE</code> 후방 방어</td><td>뒤에서 따라잡힐 때: 255로 가속하며 안쪽(중앙)으로 파고들어 상대가 관성으로 바깥쪽을 돌게 만듦</td><td>바깥쪽 초음파 ≤25cm (상대 오버슛) → <code>ATTACK_PRETURN</code> 측면 밀기 전환 · 1.2초 경과 → <code>LINE_FOLLOW</code></td></tr>
+
+            <tr class="group"><td colspan="3"><span class="dot" style="background:#94660A"></span>안전 (전역 오버라이드로 진입)</td></tr>
+            <tr><td><code>LINE_ESCAPE</code> 라인 탈출</td><td>강한 회피: 제동 50ms → 후진 250ms → 안쪽 회전 300ms. <strong>후진 중 뒤 라인이 감지되면 후진 즉시 중단</strong>하고 회전으로 넘어감</td><td>시퀀스 완료 → <code>LINE_FOLLOW</code></td></tr>
+            <tr><td><code>EDGE_SPIN</code> 걸침 복구</td><td>앞뒤 동시에 라인 = 선 위에 걸터앉은 상황. 전·후진 모두 위험하므로 제자리 회전으로 기수를 안쪽으로 돌림</td><td>300ms 경과 후 앞 라인 해제 → <code>SEEK_LINE</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ================= 5. 튜닝 ================= -->
+    <section id="tune">
+      <h2><span class="no">5</span>주요 튜닝 상수</h2>
+      <p class="lede">전부 <code>main_nano.ino</code> 상단 <code>#define</code> 블록에 모여 있습니다. <strong>★ 표시는 경기장에서 반드시 실측으로 맞춰야 하는 값</strong>입니다.</p>
+
+      <div class="scroll">
+        <table>
+          <thead><tr><th>상수</th><th>기본값</th><th>의미</th><th>조정 팁</th></tr></thead>
+          <tbody>
+            <tr class="group"><td colspan="4">★ 현장 필수 튜닝 (이 순서대로)</td></tr>
+            <tr><td class="pin">MOTOR_L/R_INVERT</td><td class="num">0</td><td>모터 회전 방향 반전</td><td>바퀴가 반대로 돌면 해당 쪽을 1로. <strong>가장 먼저 확인</strong></td></tr>
+            <tr><td class="pin">LINE_CLEAR_FRAC<br>RED_RATIO_DELTA</td><td class="num">0.45<br>0.10</td><td>빨간 선 판정 문턱값 (밝기 하락 비율 / 빨강 비율 증가폭)</td><td>DEBUG=1로 흰 바닥과 빨간 선 위의 값을 보고 조정. 흰 바닥 clear&lt;2000이면 코드의 게인을 16x→60x로</td></tr>
+            <tr><td class="pin">TURN_45_MS</td><td class="num">350</td><td>시작 45° 회전 시간</td><td><strong>새 배터리 기준</strong>으로, 살짝 덜 돌게. 배터리 닳으면 회전량이 줄기 때문 (덜 돌아도 라인 감지가 보정해 줌)</td></tr>
+            <tr><td class="pin">ATTACK_DIST_CM</td><td class="num">30</td><td>공격 개시 거리</td><td>상대 크기의 로봇을 세워두고 실제 감지 거리 확인</td></tr>
+
+            <tr class="group"><td colspan="4">속도 (0~255)</td></tr>
+            <tr><td class="pin">SPEED_PUSH</td><td class="num">255</td><td>밀기</td><td>최대 고정 — 배터리가 어차피 한계</td></tr>
+            <tr><td class="pin">SPEED_SEEK / FOLLOW / PIVOT</td><td class="num">160 / 140 / 170</td><td>직진 / 선회 / 회전</td><td>선회가 자꾸 선을 밟으면 FOLLOW를 낮추기</td></tr>
+            <tr><td class="pin">FOLLOW_BIAS</td><td class="num">25</td><td>선회 시 바깥쪽 조향량</td><td>클수록 선에 바짝 붙어 돎 (위빙 주기 짧아짐)</td></tr>
+
+            <tr class="group"><td colspan="4">거리·판정</td></tr>
+            <tr><td class="pin">REAR_DIST_CM / SIDE_DIST_CM</td><td class="num">25 / 25</td><td>후방 방어 / 측면 반응 거리</td><td></td></tr>
+            <tr><td class="pin">LOST_DIST_CM</td><td class="num">40</td><td>밀기 중 상대 소실 판정</td><td>공격 거리(30)보다 크게 유지 — 감지 튐 방지용 여유</td></tr>
+            <tr><td class="pin">ARENA_MAX_CM</td><td class="num">60</td><td>이 밖은 벽·심판으로 무시</td><td>경기장 반지름(55cm)+여유. 건드릴 일 없음</td></tr>
+
+            <tr class="group"><td colspan="4">시간 (ms)</td></tr>
+            <tr><td class="pin">PRETURN_MS</td><td class="num">150</td><td>선제 회전 시간 = 충돌각</td><td>크면 더 비스듬히 침. 너무 크면 상대를 놓침</td></tr>
+            <tr><td class="pin">PUSH_TIMEOUT_MS / DEFENSE_MS</td><td class="num">2500 / 1200</td><td>최대 밀기 / 후방 방어 지속</td><td></td></tr>
+            <tr><td class="pin">ESCAPE_REV_MS</td><td class="num">250</td><td>라인 탈출 후진 시간</td><td>7cm 선 폭 기준으로 충분. 늘리면 뒤 장외 위험 증가</td></tr>
+            <tr><td class="pin">BORED_MS</td><td class="num">8000</td><td>교착 판정 (중앙 가로지르기 발동)</td><td>상대가 수비적이면 줄여서 먼저 판 깨기</td></tr>
+            <tr><td class="pin">WATCHDOG_IDLE_MS</td><td class="num">1500</td><td>정지 워치독</td><td>5초 행동불능 감점의 안전마진 — 건드리지 말 것</td></tr>
+            <tr><td class="pin">CIRCLE_DIR</td><td class="num">1</td><td>선회 방향 (1 / -1)</td><td>상대 분석 후 하프타임에 뒤집는 카드로 활용 가능</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ================= 6. 당일 ================= -->
+    <section id="day">
+      <h2><span class="no">6</span>경기 당일 체크리스트</h2>
+
+      <h3>경기 전 준비</h3>
+      <ul class="check">
+        <li class="warn">두 스케치 모두 <code>DEBUG 0</code>으로 업로드했는가 (시리얼 출력이 루프를 느리게 함)</li>
+        <li>업로드 안 되면 보드 설정을 <strong>ATmega328P (Old Bootloader)</strong>로 (호환 나노 대부분)</li>
+        <li>배선 3대 실수 점검: GND 공통 / A6 풀다운 저항 / 컬러센서 LED ON</li>
+        <li>바퀴 방향, 45° 회전량, 라인 감지, 30cm 공격 트리거 실측 확인 (5절의 ★ 순서)</li>
+        <li>새 9V 배터리 경기 수만큼 준비</li>
+      </ul>
+
+      <h3>매 경기 루틴</h3>
+      <ul class="check">
+        <li>배터리 새것으로 교체 (전압 낮으면 45° 회전부터 틀어짐)</li>
+        <li>로봇을 <strong>흰 바닥 위에 올려둔 상태로</strong> 전원 인가 — 컬러 나노가 2초 뒤 자동 캘리브레이션 (LED 켜졌다 꺼지면 완료)</li>
+        <li>심판 신호에 시작 버튼 — 메인 나노가 0.5초 캘리브레이션 후 바로 기동</li>
+        <li class="warn">작전타임은 -3점. 라인 감지 불량·모터 역회전 같은 치명 문제에만 사용</li>
+      </ul>
+
+      <div class="note"><strong>하프타임(2분)에 할 수 있는 것</strong>
+        HW/SW 수정이 허용되므로, 전반에 본 상대 성향에 맞춰 상수를 조정할 수 있습니다. 대표 카드: 상대와 같은 방향으로 돌아 교착이면 <code>CIRCLE_DIR</code> 반전 또는 <code>BORED_MS</code> 단축, 상대가 저돌적이면 <code>ATTACK_DIST_CM</code>을 늘려 더 일찍 대응.
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    코드: <code>main_nano/main_nano.ino</code> (메인 로직) · <code>color_nano/color_nano.ino</code> (뒤 라인 센서) · 컴파일 확인 완료 (arduino:avr:nano) · 2026-07-06 기준
+  </footer>
+</div>
+
+</body>
+</html>
