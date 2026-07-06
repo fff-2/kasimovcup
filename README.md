@@ -1,7 +1,6 @@
 # KAsimov Cup 2026 스모봇 펌웨어
 
 > **📖 팀 가이드 (규칙·하드웨어·전술 상태머신·튜닝):** https://fff-2.github.io/kasimovcup/
-> (위 링크가 404면 아직 Pages 미설정 — 임시 바로보기: https://raw.githack.com/fff-2/kasimovcup/main/docs/index.html )
 
 아두이노 나노 2대 구성. `main_nano/`는 메인(모든 연산), `color_nano/`는 뒤쪽 컬러센서 전담.
 라이브러리 설치 불필요 (TCS34725 드라이버 내장, `Wire`만 사용).
