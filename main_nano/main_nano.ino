@@ -11,7 +11,9 @@
  *   앞 TCS34725: SDA=A4, SCL=A5 (I2C 직결, 모듈 LED는 항상 켜둘 것)
  *   D12: 컬러 나노의 뒤 라인 감지 신호 입력 (HIGH = 뒤 라인)
  *   D13: 상태 LED
- *   A6 : 시작 버튼 (버튼→5V, A6→10k 저항→GND 풀다운 필수!)
+ *   ※ 시작 버튼 없음! 전원 인가 = 시작 신호.
+ *      전원 연결 → AUTO_START_MS 대기(LED 느린 점멸, 마지막 1초 빠른 점멸)
+ *      → 자동 캘리브레이션 → 즉시 기동. 심판 신호에 맞춰 배터리를 꽂을 것.
  *   ※ 두 나노는 반드시 GND 공통 연결
  *
  *  [현장 튜닝 체크리스트 — 경기 전 반드시 확인]
@@ -52,7 +54,8 @@
 #define LINE_CLEAR_FRAC   0.45f // 라인 판정: clear < 흰바닥 × 이 비율
 #define RED_RATIO_DELTA   0.10f // 라인 판정: R비율 > 흰바닥 R비율 + 이 값
 #define WATCHDOG_IDLE_MS  1500  // 정지 워치독 (행동불능 감점 방지)
-#define START_DELAY_MS    0     // 버튼 후 대기 시간 (규정상 대기 필요 시 설정)
+#define AUTO_START_MS     5000  // 전원 인가 후 자동 시작까지 대기 시간 (배터리 꽂고 손 뗄 여유)
+                                // ※ 컬러 나노가 2초 뒤 캘리브레이션하므로 3000 이상 유지할 것
 #define MOTOR_L_INVERT    0     // 왼쪽 모터가 반대로 돌면 1
 #define MOTOR_R_INVERT    0     // 오른쪽 모터가 반대로 돌면 1
 
@@ -70,7 +73,6 @@ const uint8_t PIN_IN3 = A2;
 const uint8_t PIN_IN4 = A3;
 const uint8_t PIN_BACK_LINE = 12;  // 컬러 나노 신호
 const uint8_t PIN_LED = 13;
-const uint8_t PIN_BTN = A6;        // analogRead 전용
 
 #define NO_TARGET 999
 
@@ -336,21 +338,19 @@ void loop() {
   /* ---- 3. 상태별 동작 ---- */
   switch (state) {
 
-    case ST_IDLE:
+    case ST_IDLE:                                     // 전원 인가 후 자동 시작 카운트다운
       setMotors(0, 0);
       lastMoveCmd = now;                              // IDLE은 워치독 제외
-      // A6는 아날로그 전용: 버튼(5V) + 10k 풀다운 필수
-      if (analogRead(PIN_BTN) > 512) {
-        delay(30);
-        if (analogRead(PIN_BTN) > 512) enterState(ST_CALIBRATE);
+      {
+        // LED: 평소 느린 점멸(2Hz), 마지막 1초는 빠른 점멸(10Hz) → 곧 출발 경고
+        unsigned long remain = (t < AUTO_START_MS) ? (AUTO_START_MS - t) : 0;
+        digitalWrite(PIN_LED, (now / (remain > 1000 ? 250 : 50)) & 1);
       }
+      if (t >= AUTO_START_MS) enterState(ST_CALIBRATE);
       break;
 
     case ST_CALIBRATE:
       calibrateWhite();                               // 약 0.5초 소요
-#if START_DELAY_MS > 0
-      delay(START_DELAY_MS);
-#endif
       lastContact = millis();
       lastMoveCmd = millis();                         // 캘리브레이션 시간이 워치독에 걸리지 않게
       enterState(ST_START_TURN);
@@ -471,5 +471,6 @@ void loop() {
   }
 #endif
 
-  digitalWrite(PIN_LED, (state == ST_PUSH || frontLine));  // 상태 표시
+  if (state != ST_IDLE)                                     // IDLE은 카운트다운 점멸이 LED 사용
+    digitalWrite(PIN_LED, (state == ST_PUSH || frontLine)); // 상태 표시
 }

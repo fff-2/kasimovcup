@@ -211,6 +211,119 @@
       <h2><span class="no">2</span>하드웨어 구성</h2>
       <p class="lede">나노 2대 체제입니다. TCS34725 컬러센서는 I2C 주소(0x29)가 고정이라 한 버스에 2개를 못 달기 때문에, <strong>앞 센서는 메인 나노가 직접</strong> 읽고 <strong>뒤 센서는 전담 나노</strong>가 읽어 감지 결과만 디지털 신호 한 가닥으로 넘깁니다.</p>
 
+      <figure>
+        <div class="diagram">
+        <svg viewBox="0 0 1000 720" role="img" aria-label="카시모프컵 2026 스모봇 배선도">
+          <style>
+            .cx-ttl  { font: 700 15px 'Malgun Gothic','Apple SD Gothic Neo',sans-serif; fill: #211E1B; text-anchor: middle; }
+            .cx-ttls { font: 700 13px 'Malgun Gothic','Apple SD Gothic Neo',sans-serif; fill: #211E1B; text-anchor: middle; }
+            .cx-pin  { font: 600 12px Consolas,'Cascadia Mono',monospace; fill: #454039; text-anchor: middle; }
+            .cx-sub  { font: 600 11px 'Malgun Gothic',sans-serif; fill: #6E6760; text-anchor: middle; }
+            .cx-tag  { font: 600 10.5px Consolas,monospace; fill: #6E6760; }
+            .cx-box  { fill: #FFFFFF; stroke: #55504B; stroke-width: 1.6; }
+            .cx-wire { fill: none; stroke-width: 2.4; }
+            .cx-son  { stroke: #C96A1E; }
+            .cx-i2c  { stroke: #6B4FA0; }
+            .cx-mot  { stroke: #2F6DB5; }
+            .cx-nn   { stroke: #2E7D4F; }
+            .cx-pwr  { stroke: #B3261E; }
+            .cx-wl   { font: 600 11px 'Malgun Gothic',sans-serif; fill: #55504B; text-anchor: middle;
+                       paint-order: stroke; stroke: #FCFBF9; stroke-width: 4px; stroke-linejoin: round; }
+            .cx-leg  { font: 600 11.5px 'Malgun Gothic',sans-serif; fill: #454039; }
+          </style>
+          <defs>
+            <marker id="cxg" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+              <path d="M0,0 L10,5 L0,10 z" fill="#2E7D4F"/>
+            </marker>
+            <marker id="cxr" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+              <path d="M0,0 L10,5 L0,10 z" fill="#B3261E"/>
+            </marker>
+          </defs>
+          <rect x="0" y="0" width="1000" height="720" fill="#FCFBF9" stroke="#E3DED5"/>
+          <text x="40" y="36" style="font:800 17px 'Malgun Gothic',sans-serif; fill:#211E1B">카시모프컵 2026 스모봇 배선도</text>
+          <text x="40" y="57" style="font:600 11.5px 'Malgun Gothic',sans-serif; fill:#6E6760">신호선 중심 — 모든 모듈 VCC는 5V 레일, GND는 전체 공통(그림 생략) · 위쪽 = 로봇 전방</text>
+          <g>
+            <line class="cx-wire cx-son" x1="640" y1="26" x2="670" y2="26"/><text class="cx-leg" x="676" y="30">초음파</text>
+            <line class="cx-wire cx-i2c" x1="750" y1="26" x2="780" y2="26"/><text class="cx-leg" x="786" y="30">I2C 컬러센서</text>
+            <line class="cx-wire cx-pwr" x1="890" y1="26" x2="920" y2="26"/><text class="cx-leg" x="926" y="30">전원</text>
+            <line class="cx-wire cx-mot" x1="640" y1="48" x2="670" y2="48"/><text class="cx-leg" x="676" y="52">모터 구동</text>
+            <line class="cx-wire cx-nn"  x1="750" y1="48" x2="780" y2="48"/><text class="cx-leg" x="786" y="52">나노 간 신호</text>
+          </g>
+          <rect class="cx-box" x="400" y="80" width="180" height="58" rx="8"/>
+          <text class="cx-ttls" x="490" y="104">HC-SR04 · 앞</text>
+          <text class="cx-pin" x="490" y="124">Trig D4 · Echo D5</text>
+          <rect class="cx-box" x="40" y="96" width="200" height="58" rx="8"/>
+          <text class="cx-ttls" x="140" y="120">HC-SR04 · 왼쪽</text>
+          <text class="cx-pin" x="140" y="140">Trig D6 · Echo D7</text>
+          <rect class="cx-box" x="760" y="96" width="200" height="58" rx="8"/>
+          <text class="cx-ttls" x="860" y="120">HC-SR04 · 오른쪽</text>
+          <text class="cx-pin" x="860" y="140">Trig D2 · Echo D3</text>
+          <rect class="cx-box" x="400" y="480" width="180" height="58" rx="8"/>
+          <text class="cx-ttls" x="490" y="504">HC-SR04 · 뒤</text>
+          <text class="cx-pin" x="490" y="524">Trig D8 · Echo D9</text>
+          <rect class="cx-box" x="400" y="210" width="180" height="230" rx="10" stroke-width="2.4"/>
+          <text class="cx-ttl" x="490" y="318">메인 나노</text>
+          <text class="cx-sub" x="490" y="338">모든 연산 담당</text>
+          <text class="cx-tag" x="440" y="226" text-anchor="middle">D6·D7</text>
+          <text class="cx-tag" x="490" y="226" text-anchor="middle">D4·D5</text>
+          <text class="cx-tag" x="540" y="226" text-anchor="middle">D2·D3</text>
+          <text class="cx-tag" x="490" y="434" text-anchor="middle">D8·D9</text>
+          <text class="cx-tag" x="408" y="324">A4·A5</text>
+          <text class="cx-tag" x="408" y="396">D12</text>
+          <text class="cx-tag" x="572" y="272" text-anchor="end">D10·A0·A1</text>
+          <text class="cx-tag" x="572" y="322" text-anchor="end">D11·A2·A3</text>
+          <line class="cx-wire cx-son" x1="490" y1="138" x2="490" y2="210"/>
+          <polyline class="cx-wire cx-son" points="140,154 140,182 440,182 440,210"/>
+          <polyline class="cx-wire cx-son" points="860,154 860,182 540,182 540,210"/>
+          <line class="cx-wire cx-son" x1="490" y1="440" x2="490" y2="480"/>
+          <rect class="cx-box" x="40" y="300" width="200" height="64" rx="8"/>
+          <text class="cx-ttls" x="140" y="324">TCS34725 · 앞 라인</text>
+          <text class="cx-pin" x="140" y="346">SDA A4 · SCL A5 (LED 켬)</text>
+          <line class="cx-wire cx-i2c" x1="240" y1="332" x2="400" y2="332"/>
+          <rect class="cx-box" x="40" y="470" width="200" height="90" rx="10" stroke-width="2.4"/>
+          <text class="cx-ttl" x="140" y="500">컬러 나노</text>
+          <text class="cx-sub" x="140" y="520">뒤 라인 감지 전담</text>
+          <text class="cx-pin" x="140" y="544">출력 D2 · I2C A4/A5</text>
+          <polyline class="cx-wire cx-nn" points="240,505 330,505 330,400 396,400" marker-end="url(#cxg)"/>
+          <text class="cx-wl" x="285" y="497">D2 → D12</text>
+          <text class="cx-wl" x="352" y="452">HIGH = 뒤 라인</text>
+          <rect class="cx-box" x="40" y="610" width="200" height="58" rx="8"/>
+          <text class="cx-ttls" x="140" y="634">TCS34725 · 뒤 라인</text>
+          <text class="cx-pin" x="140" y="654">SDA A4 · SCL A5 (LED 켬)</text>
+          <line class="cx-wire cx-i2c" x1="140" y1="610" x2="140" y2="560"/>
+          <rect class="cx-box" x="760" y="240" width="200" height="140" rx="10" stroke-width="2.4"/>
+          <text class="cx-ttl" x="860" y="268">L298N</text>
+          <text class="cx-pin" x="860" y="292">ENA D10 · IN1 A0 · IN2 A1</text>
+          <text class="cx-pin" x="860" y="312">ENB D11 · IN3 A2 · IN4 A3</text>
+          <text class="cx-sub" x="860" y="336">PWM은 D10/D11 (나노에서 남은</text>
+          <text class="cx-sub" x="860" y="352">PWM핀이 이 둘뿐 — 변경 금지)</text>
+          <line class="cx-wire cx-mot" x1="580" y1="280" x2="760" y2="280"/>
+          <text class="cx-wl" x="670" y="272">왼쪽 모터 제어</text>
+          <line class="cx-wire cx-mot" x1="580" y1="330" x2="760" y2="330"/>
+          <text class="cx-wl" x="670" y="322">오른쪽 모터 제어</text>
+          <rect class="cx-box" x="760" y="420" width="90" height="52" rx="8"/>
+          <text class="cx-ttls" x="805" y="450">모터 L</text>
+          <rect class="cx-box" x="870" y="420" width="90" height="52" rx="8"/>
+          <text class="cx-ttls" x="915" y="450">모터 R</text>
+          <line class="cx-wire cx-mot" x1="800" y1="380" x2="800" y2="420"/>
+          <text class="cx-wl" x="826" y="404">OUT1·2</text>
+          <line class="cx-wire cx-mot" x1="920" y1="380" x2="920" y2="420"/>
+          <text class="cx-wl" x="946" y="404">OUT3·4</text>
+          <rect x="620" y="520" width="350" height="170" rx="10" fill="none" stroke="#B3261E" stroke-width="1.4" stroke-dasharray="7 5"/>
+          <text class="cx-ttls" x="795" y="545" fill="#B3261E">전원</text>
+          <rect class="cx-box" x="645" y="560" width="130" height="50" rx="8"/>
+          <text class="cx-ttls" x="710" y="590">7.4V 배터리 (2S)</text>
+          <rect class="cx-box" x="815" y="560" width="130" height="50" rx="8"/>
+          <text class="cx-ttls" x="880" y="590">강압기 → 5V</text>
+          <line class="cx-wire cx-pwr" x1="775" y1="585" x2="811" y2="585" marker-end="url(#cxr)"/>
+          <text class="cx-sub" x="795" y="632">5V 병렬 공급 → 메인 나노 · 컬러 나노 · L298N</text>
+          <text class="cx-sub" x="795" y="650">GND는 모든 모듈 공통 연결 (필수!)</text>
+          <text class="cx-sub" x="795" y="668" fill="#B3261E">팁: L298N 모터전원(VS)을 7.4V 직결하면 밀기 토크 ↑</text>
+        </svg>
+        </div>
+        <figcaption>배선도 (신호선 중심) — 원본 파일: 저장소의 <code>docs/circuit.svg</code></figcaption>
+      </figure>
+
       <h3>메인 나노 (모든 연산)</h3>
       <div class="scroll">
         <table>
@@ -224,7 +337,7 @@
             <tr><td>L298N 방향</td><td class="pin">IN1 A0 · IN2 A1 · IN3 A2 · IN4 A3</td><td>왼쪽 모터 IN1/2, 오른쪽 IN3/4</td></tr>
             <tr><td>앞 컬러센서</td><td class="pin">SDA A4 / SCL A5</td><td>I2C 직결 — 반응속도가 생명인 앞쪽을 메인에 배치</td></tr>
             <tr><td>뒤 라인 신호 입력</td><td class="pin">D12</td><td>컬러 나노에서 옴. HIGH = 뒤에 라인</td></tr>
-            <tr><td>상태 LED / 시작 버튼</td><td class="pin">D13 / A6</td><td>A6는 아날로그 전용 핀 — 아래 경고 참조</td></tr>
+            <tr><td>상태 LED</td><td class="pin">D13</td><td>시작 카운트다운 점멸 · 경기 중 PUSH/라인 감지 표시 (시작 버튼 없음 — 전원 연결 = 시작)</td></tr>
           </tbody>
         </table>
       </div>
@@ -240,13 +353,13 @@
         </table>
       </div>
 
-      <div class="danger"><strong>배선에서 가장 많이 터지는 실수 3가지</strong>
+      <div class="danger"><strong>배선·운용에서 가장 많이 터지는 실수 3가지</strong>
         ① 두 나노의 <strong>GND를 서로 연결하지 않음</strong> → D12 신호가 무의미해짐.
-        ② 시작 버튼 <strong>A6에 10kΩ 풀다운 저항 누락</strong> → 핀이 떠서 로봇이 멋대로 출발.
-        ③ 컬러센서 모듈의 <strong>LED를 꺼둠</strong> → 로봇 밑은 그늘이라 감지 불가. LED는 항상 ON.
+        ② 컬러센서 모듈의 <strong>LED를 꺼둠</strong> → 로봇 밑은 그늘이라 감지 불가. LED는 항상 ON.
+        ③ <strong>위치를 잡기 전에 배터리를 연결</strong> — 시작 버튼이 없어서 전원 연결 = 시작 신호. 연결 5초 뒤 로봇이 출발한다!
       </div>
-      <div class="note"><strong>9V 사각 배터리가 최대 약점</strong>
-        L298N이 약 2V를 잡아먹어 모터에 ~7V만 전달되고, 9V 배터리는 밀기 싸움의 순간 전류를 못 버팁니다. <strong>매 경기 새 배터리</strong>가 최소 조건이고, 규정이 허용하면 2S 리튬(7.4V)으로의 교체를 검토하세요. 배터리가 닳으면 회전량도 줄어서 45° 시작 회전 각도가 함께 틀어집니다.
+      <div class="note"><strong>전원 구성: 7.4V(2S) 배터리 → 강압기 5V → 나노 2대 + L298N 병렬</strong>
+        현재 구성은 L298N 모터전원도 5V 레일을 거치는데, L298N이 약 2V를 잡아먹어 모터 실효 전압이 ~3V까지 떨어집니다. <strong>L298N의 VS(모터전원) 단자만 7.4V 배터리에 직결</strong>하면(로직 전원은 5V 유지) 밀기 토크가 크게 올라가니 검토해 보세요. 배터리 전압이 낮아지면 45° 시작 회전 각도부터 틀어지므로 매 경기 완충 상태로 시작해야 합니다.
       </div>
     </section>
 
@@ -342,7 +455,7 @@
 
           <!-- ===== 시작 시퀀스 ===== -->
           <rect class="st prep" x="28"  y="34" width="118" height="52"/>
-          <text class="nm" x="87"  y="57">IDLE</text><text class="sb" x="87" y="75">대기</text>
+          <text class="nm" x="87"  y="57">IDLE</text><text class="sb" x="87" y="75">시작 카운트다운</text>
           <rect class="st prep" x="186" y="34" width="140" height="52"/>
           <text class="nm" x="256" y="57">CALIBRATE</text><text class="sb" x="256" y="75">흰 바닥 기준값 저장</text>
           <rect class="st prep" x="366" y="34" width="142" height="52"/>
@@ -351,7 +464,7 @@
           <text class="nm" x="614" y="57">SEEK_LINE</text><text class="sb" x="614" y="75">직진으로 라인 탐색</text>
 
           <line class="eg" x1="146" y1="60" x2="182" y2="60" marker-end="url(#m)"/>
-          <text class="lb" x="166" y="50">버튼</text>
+          <text class="lb" x="166" y="50">5초 후</text>
           <line class="eg" x1="326" y1="60" x2="362" y2="60" marker-end="url(#m)"/>
           <text class="lb" x="346" y="50">완료</text>
           <line class="eg" x1="508" y1="60" x2="544" y2="60" marker-end="url(#m)"/>
@@ -427,7 +540,7 @@
           <thead><tr><th style="min-width:150px">상태</th><th style="min-width:230px">하는 일</th><th>탈출 조건 → 다음 상태</th></tr></thead>
           <tbody>
             <tr class="group"><td colspan="3"><span class="dot" style="background:#6E6760"></span>준비</td></tr>
-            <tr><td><code>IDLE</code> 대기</td><td>모터 정지, 시작 버튼 감시</td><td>버튼 눌림(30ms 재확인) → <code>CALIBRATE</code></td></tr>
+            <tr><td><code>IDLE</code> 시작 카운트다운</td><td>전원 인가 = 시작 신호. 모터 정지로 대기하며 LED 느린 점멸(2Hz), 마지막 1초는 빠른 점멸(10Hz) = 출발 임박 경고</td><td><code>AUTO_START_MS</code>(5초) 경과 → <code>CALIBRATE</code></td></tr>
             <tr><td><code>CALIBRATE</code> 캘리브레이션</td><td>흰 바닥을 20회 샘플링(~0.5초)해 기준 밝기·색비율 저장. 실패 시 경고 점멸 후 보수적 기본값으로 진행</td><td>완료 → <code>START_TURN</code></td></tr>
             <tr><td><code>START_TURN</code> 시작 회전</td><td>제자리에서 45° 회전 (시간 기반 — 배터리 전압에 민감)</td><td>350ms 경과 → <code>SEEK_LINE</code></td></tr>
 
@@ -479,6 +592,7 @@
             <tr><td class="pin">PRETURN_MS</td><td class="num">150</td><td>선제 회전 시간 = 충돌각</td><td>크면 더 비스듬히 침. 너무 크면 상대를 놓침</td></tr>
             <tr><td class="pin">PUSH_TIMEOUT_MS / DEFENSE_MS</td><td class="num">2500 / 1200</td><td>최대 밀기 / 후방 방어 지속</td><td></td></tr>
             <tr><td class="pin">ESCAPE_REV_MS</td><td class="num">250</td><td>라인 탈출 후진 시간</td><td>7cm 선 폭 기준으로 충분. 늘리면 뒤 장외 위험 증가</td></tr>
+            <tr><td class="pin">AUTO_START_MS</td><td class="num">5000</td><td>전원 인가 후 자동 시작까지 대기</td><td>컬러 나노 캘리브레이션(전원 후 2초)이 먼저 끝나야 함 — <strong>3000 미만 금지</strong></td></tr>
             <tr><td class="pin">BORED_MS</td><td class="num">8000</td><td>교착 판정 (중앙 가로지르기 발동)</td><td>상대가 수비적이면 줄여서 먼저 판 깨기</td></tr>
             <tr><td class="pin">WATCHDOG_IDLE_MS</td><td class="num">1500</td><td>정지 워치독</td><td>5초 행동불능 감점의 안전마진 — 건드리지 말 것</td></tr>
             <tr><td class="pin">CIRCLE_DIR</td><td class="num">1</td><td>선회 방향 (1 / -1)</td><td>상대 분석 후 하프타임에 뒤집는 카드로 활용 가능</td></tr>
@@ -495,16 +609,16 @@
       <ul class="check">
         <li class="warn">두 스케치 모두 <code>DEBUG 0</code>으로 업로드했는가 (시리얼 출력이 루프를 느리게 함)</li>
         <li>업로드 안 되면 보드 설정을 <strong>ATmega328P (Old Bootloader)</strong>로 (호환 나노 대부분)</li>
-        <li>배선 3대 실수 점검: GND 공통 / A6 풀다운 저항 / 컬러센서 LED ON</li>
+        <li>배선 점검: 두 나노 GND 공통 / 컬러센서 LED ON (위 배선도 참조)</li>
         <li>바퀴 방향, 45° 회전량, 라인 감지, 30cm 공격 트리거 실측 확인 (5절의 ★ 순서)</li>
         <li>새 9V 배터리 경기 수만큼 준비</li>
       </ul>
 
       <h3>매 경기 루틴</h3>
       <ul class="check">
-        <li>배터리 새것으로 교체 (전압 낮으면 45° 회전부터 틀어짐)</li>
-        <li>로봇을 <strong>흰 바닥 위에 올려둔 상태로</strong> 전원 인가 — 컬러 나노가 2초 뒤 자동 캘리브레이션 (LED 켜졌다 꺼지면 완료)</li>
-        <li>심판 신호에 시작 버튼 — 메인 나노가 0.5초 캘리브레이션 후 바로 기동</li>
+        <li>완충 배터리로 교체 (전압 낮으면 45° 회전부터 틀어짐)</li>
+        <li>로봇을 시작 지점(흰 바닥)에 정확히 배치 — <strong>배터리는 아직 연결하지 않는다</strong></li>
+        <li><strong>심판 신호에 맞춰 배터리 연결 = 시작 신호.</strong> LED 느린 점멸 5초(이 사이 컬러 나노가 자동 캘리브레이션) → 마지막 1초 빠른 점멸 → 자동 기동</li>
         <li class="warn">작전타임은 -3점. 라인 감지 불량·모터 역회전 같은 치명 문제에만 사용</li>
       </ul>
 
@@ -516,7 +630,7 @@
   </main>
 
   <footer>
-    코드: <code>main_nano/main_nano.ino</code> (메인 로직) · <code>color_nano/color_nano.ino</code> (뒤 라인 센서) · 컴파일 확인 완료 (arduino:avr:nano) · 2026-07-06 기준
+    코드: <code>main_nano/main_nano.ino</code> (메인 로직) · <code>color_nano/color_nano.ino</code> (뒤 라인 센서) · 자동 시작(버튼 없음) 버전 · 컴파일 확인 완료 (arduino:avr:nano) · 2026-07-08 기준
   </footer>
 </div>
 
