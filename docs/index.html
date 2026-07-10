@@ -60,6 +60,7 @@
 
   /* ---------- 섹션 공통 ---------- */
   main { display: grid; gap: 56px; }
+  main > section { min-width: 0; }
   section > h2 {
     font-size: 21px; font-weight: 800; letter-spacing: -.01em;
     margin: 0 0 6px; padding-top: 8px;
@@ -98,7 +99,7 @@
   }
   .note { background: var(--amber-soft); border: 1px solid #E5D3A8; }
   .danger { background: var(--red-soft); border: 1px solid #E0BBB5; }
-  .note strong, .danger strong { display: block; margin-bottom: 2px; }
+  .note > strong:first-child, .danger > strong:first-child { display: block; margin-bottom: 4px; }
   .danger strong { color: var(--red); }
   .note strong { color: var(--amber); }
 
@@ -132,7 +133,8 @@
   figure { margin: 0; }
   figcaption { font-size: 13px; color: var(--muted); margin-top: 10px; }
   .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; margin: 14px 0 6px; }
-  .gallery img { width: 100%; display: block; border: 1px solid var(--rule); border-radius: 8px; background: #fff; }
+  .gallery img { width: 100%; display: block; border: 1px solid var(--rule); border-radius: 8px; background: #fff;
+                 aspect-ratio: 4 / 3; object-fit: cover; }
   .gallery figcaption { margin-top: 7px; }
   .diagram { overflow-x: auto; background: #fff; border: 1px solid var(--rule); border-radius: 8px; padding: 10px 6px; }
   .diagram svg { display: block; min-width: 880px; margin: 0 auto; }
