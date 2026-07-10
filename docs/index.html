@@ -131,6 +131,9 @@
   .swatch { width: 14px; height: 14px; border-radius: 4px; border: 1.5px solid; }
   figure { margin: 0; }
   figcaption { font-size: 13px; color: var(--muted); margin-top: 10px; }
+  .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; margin: 14px 0 6px; }
+  .gallery img { width: 100%; display: block; border: 1px solid var(--rule); border-radius: 8px; background: #fff; }
+  .gallery figcaption { margin-top: 7px; }
   .diagram { overflow-x: auto; background: #fff; border: 1px solid var(--rule); border-radius: 8px; padding: 10px 6px; }
   .diagram svg { display: block; min-width: 880px; margin: 0 auto; }
 
@@ -212,6 +215,23 @@
       <h2><span class="no">2</span>하드웨어 구성</h2>
       <p class="lede">나노 2대 체제입니다. TCS34725 컬러센서는 I2C 주소(0x29)가 고정이라 한 버스에 2개를 못 달기 때문에, <strong>앞 센서는 메인 나노가 직접</strong> 읽고 <strong>뒤 센서는 전담 나노</strong>가 읽어 감지 결과만 디지털 신호 한 가닥으로 넘깁니다.</p>
 
+      <h3>로봇 설계 (Fusion 360)</h3>
+      <div class="gallery">
+        <figure>
+          <img src="media/design-internal.png" alt="내부 배치 설계 렌더">
+          <figcaption>내부 배치 — 나노 · L298N · 18650 2S 배터리 · 모터</figcaption>
+        </figure>
+        <figure>
+          <img src="media/design-bottom.png" alt="하부 설계 렌더">
+          <figcaption>하부 — TCS34725 컬러센서 앞·뒤 장착</figcaption>
+        </figure>
+        <figure>
+          <img src="media/design-shell.png" alt="외형 설계 렌더">
+          <figcaption>외형 — 전면 경사면(웨지)으로 상대 밑을 파고듦</figcaption>
+        </figure>
+      </div>
+
+      <h3>배선도</h3>
       <figure>
         <div class="diagram">
         <svg viewBox="0 0 1000 720" role="img" aria-label="카시모프컵 2026 스모봇 배선도">
@@ -641,7 +661,7 @@
   </main>
 
   <footer>
-    코드: <code>main_nano/main_nano.ino</code> (메인 로직) · <code>color_nano/color_nano.ino</code> (뒤 라인 센서) · 자동 시작(버튼 없음) 버전 · 컴파일 확인 완료 (arduino:avr:nano) · 2026-07-08 기준
+    코드: <code>main_nano/main_nano.ino</code> (메인 로직) · <code>color_nano/color_nano.ino</code> (뒤 라인 센서) · 자동 시작(버튼 없음) 버전 · 컴파일 확인 완료 (arduino:avr:nano) · 2026-07-10 기준
   </footer>
 </div>
 
