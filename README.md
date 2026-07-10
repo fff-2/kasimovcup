@@ -3,6 +3,8 @@
 > **📖 팀 가이드 (규칙·하드웨어·전술 상태머신·튜닝):** https://fff-2.github.io/kasimovcup/
 > **🎬 경기 영상 (2026-07-10):** https://fff-2.github.io/kasimovcup/#video · [파일](docs/media/match-2026-07-10.mp4)
 
+[![경기 하이라이트 — 클릭하면 전체 영상 재생](docs/media/match-preview.gif)](https://fff-2.github.io/kasimovcup/#video)
+
 아두이노 나노 2대 구성. `main_nano/`는 메인(모든 연산), `color_nano/`는 뒤쪽 컬러센서 전담.
 라이브러리 설치 불필요 (TCS34725 드라이버 내장, `Wire`만 사용).
 **시작 버튼 없음 — 전원 연결 = 시작 신호** (5초 카운트다운 후 자동 기동).
